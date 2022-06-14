@@ -2,19 +2,22 @@ import { Request,Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
 
 
-const handleUnauthorizedError(next:NextFunction)=>{
-    const error: Error = new Error('Login Error : please try again');
-        error.status = 401;
-        next(error);
-}
-
 const validateTokenMiddleware = (
     req:Request,
     res:Response,
-    next
+    next: NextFunction
 ) => {
     try{
         // get authheader 
+       const authHeader: string|undefined = req.get('Authorization')
+       if(authHeader){
+        const token = authHeader.split(' ')[1];
+        jwt.verify(token, process.env.TOKEN_SECRET as string);
+        next();
+       } else {
+        throw new Error("auth header is not available ");
+       }
+        
         //check authHeader validate
         // get value  of token
         // check if it bearer
@@ -22,7 +25,8 @@ const validateTokenMiddleware = (
         //token type not bearer
         //no token provider
     } catch(error){
-        handleUnauthorizedError(next);
-
+        res.status(401).json(error);
     }
 }
+
+export default validateTokenMiddleware;
