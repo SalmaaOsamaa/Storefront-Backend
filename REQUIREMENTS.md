@@ -5,38 +5,45 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index: /api/products[get]
+- getOne: api/products/:id [get]
+- showByCategory: api/products/category:category [get]
+- Create: api/products [post]
+- Delete: api/products/:id [delete]
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index: /api/users[get]
+- getOne: api/user/:id[get]
+- Create: api/users[post]
+- Delete: api/users/:id[delete]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- index: api/orders[get]
+- show: api/orders/:id [get]
+- create: api/orders [post]
+-currentOrders: api/orders/current[get]
+-completedOrders: api/orders/completed
 
 ## Data Shapes
 #### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+-  id [SERIAL PRIMARY KEY]
+- name [VARCHAR(50)]
+- price [NUMERIC]
+- [OPTIONAL] category [VARCHAR(50)]
 
 #### User
-- id
-- firstName
-- lastName
-- password
+- id[SERIAL PRIMARY KEY]
+- firstName [VARCHAR(50)]
+- lastName[VARCHAR(50)]
+- password[VARCHAR(60)]
 
 #### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+- id[SERIAL PRIMARY KEY]
+- user_id[INTEGER]
+- status of order [VARCHAR(20)] (active or complete)
 
+#### Order_Product
+- id[SERIAL PRIMARY KEY]
+-quantity [INTEGER]
+-user_id [INTEGER] REFERENCES orders(id)
+-product_id [INTEGER] REFERENCES products(id)

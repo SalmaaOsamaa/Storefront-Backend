@@ -5,10 +5,10 @@ export const orderRoutes = express.Router();
 
 orderRoutes.route("/orders").post(authenticationMiddlware, controllers.create);
 orderRoutes
-  .route("/order/current")
+  .route("/orders/current")
   .get(authenticationMiddlware, controllers.CurrentOrders);
 orderRoutes
-  .route("/order/completed")
+  .route("/orders/completed")
   .get(authenticationMiddlware, controllers.CompletedOrders);
 orderRoutes.route("/orders/:id").get(authenticationMiddlware, controllers.show);
 orderRoutes.route("/orders").get(authenticationMiddlware, controllers.index);

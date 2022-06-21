@@ -5,11 +5,11 @@ const routes = Router();
 
 // api/users
 routes
-  .route("/")
+  .route("/users")
   .get(authenticationMiddlware, controllers.getMany)
   .post(controllers.create);
 routes
-  .route("/:id")
+  .route("/users/:id")
   .get(authenticationMiddlware, controllers.getOne)
   .post(controllers.updateOne)
   .delete(controllers.deleteOne);
