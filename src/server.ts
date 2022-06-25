@@ -21,7 +21,6 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 //   app.use(productRouter);
-app.use("/api", routes);
 
 app.get("/", function (req: Request, res: Response) {
   res.send("Hello World!");

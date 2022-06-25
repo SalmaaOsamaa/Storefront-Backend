@@ -12,7 +12,7 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_TEST_DB,
   BCRYPT_PASSWORD,
-  SALT_ROUND,
+  SALT_ROUNDS,
   TOKEN_SECRET,
 } = process.env;
 
@@ -24,7 +24,7 @@ const client: Pool = new Pool({
   password: POSTGRES_PASSWORD,
   // @ts-ignore
   dbport: POSTGRES_PORT,
-  salt: SALT_ROUND,
+  salt: SALT_ROUNDS,
   pepper: BCRYPT_PASSWORD,
   tokenSecret: TOKEN_SECRET,
 });

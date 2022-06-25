@@ -1,17 +1,17 @@
 import { Router } from "express";
 import * as controllers from "../../controllers/users.controllers";
 import authenticationMiddlware from "../../middleware/authentication.middleware";
-const routes = Router();
-
+const userRoutes = Router();
 // api/users
-routes
-  .route("/users")
+userRoutes
+  .route("")
   .get(authenticationMiddlware, controllers.getMany)
   .post(controllers.create);
-routes
-  .route("/users/:id")
+  userRoutes
+  .route("/:id")
   .get(authenticationMiddlware, controllers.getOne)
   .post(controllers.updateOne)
   .delete(controllers.deleteOne);
-
-export default routes;
+  //authenticate
+  userRoutes.route('/authenticate').post(controllers.authenticate);
+export default userRoutes;

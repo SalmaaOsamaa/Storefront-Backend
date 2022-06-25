@@ -3,12 +3,12 @@ import authenticationMiddlware from "../../middleware/authentication.middleware"
 import * as controllers from "../../controllers/orders.controllers";
 export const orderRoutes = express.Router();
 
-orderRoutes.route("/orders").post(authenticationMiddlware, controllers.create);
+orderRoutes.route("").post(authenticationMiddlware, controllers.create);
 orderRoutes
-  .route("/orders/current")
+  .route("/current")
   .get(authenticationMiddlware, controllers.CurrentOrders);
 orderRoutes
-  .route("/orders/completed")
+  .route("/completed")
   .get(authenticationMiddlware, controllers.CompletedOrders);
-orderRoutes.route("/orders/:id").get(authenticationMiddlware, controllers.show);
-orderRoutes.route("/orders").get(authenticationMiddlware, controllers.index);
+orderRoutes.route("/:id").get(authenticationMiddlware, controllers.show);
+orderRoutes.route("").get(authenticationMiddlware, controllers.index);

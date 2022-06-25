@@ -100,8 +100,8 @@ export const authenticate = async (
     const { email, password } = req.body;
     const user = await userModel.authenticate(email, password);
     const token = jwt.sign(
-      { user },
-      process.env.tokenSecret as unknown as string
+      { user},
+      process.env.TOKEN_SECRET as string
     );
     if (!user) {
       return res.status(401).json({

@@ -6,8 +6,8 @@ import {
 } from "../../controllers/products.controllere";
 export const productRouter = express.Router();
 
-productRouter.get("/products", controllers.index);
-productRouter.get("/products/:id", controllers.getOne);
-productRouter.post("/products", controllers.create);
-productRouter.get("/products/category/:category", showByCategory);
-productRouter.delete("/products/:id", destroy);
+productRouter.get("", controllers.index);
+productRouter.get("/:id", controllers.getOne);
+productRouter.post("/", controllers.create);
+productRouter.get("/category/:category", showByCategory);
+productRouter.delete("/:id", destroy);
