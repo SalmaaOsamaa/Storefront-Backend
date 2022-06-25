@@ -78,7 +78,6 @@ This project require some prequesites and dependenscies to be installed, you can
    ```sh
    git clone https://github.com/SalmaaOsamaa/Storefront-Backend.git
    ```
-   ```
 
 2. install dependenscies
 
