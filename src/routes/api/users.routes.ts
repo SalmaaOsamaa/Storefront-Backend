@@ -7,11 +7,12 @@ userRoutes
   .route("")
   .get(authenticationMiddlware, controllers.getMany)
   .post(controllers.create);
+
+  //authenticate
+  userRoutes.route('/authenticate').post(controllers.authenticate);
   userRoutes
   .route("/:id")
   .get(authenticationMiddlware, controllers.getOne)
   .post(controllers.updateOne)
   .delete(controllers.deleteOne);
-  //authenticate
-  userRoutes.route('/authenticate').post(controllers.authenticate);
 export default userRoutes;

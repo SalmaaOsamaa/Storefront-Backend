@@ -45,8 +45,7 @@ export const getOne = async (
   next: NextFunction
 ) => {
   try {
-
-    const user = await userModel.getOne(req.params.id as unknown as string);
+    const user = await userModel.getOne(req.params.id as unknown as string); 
     res.json({
       status: "sucess",
       message: "done",
