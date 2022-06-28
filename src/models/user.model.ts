@@ -8,6 +8,9 @@ const hashPassword = (password: string) => {
 };
 
 class UserModel {
+  deleteProduct(arg0: number) {
+      throw new Error("Method not implemented.");
+  }
   // create new user
   async create(u: User): Promise<User> {
     try {
