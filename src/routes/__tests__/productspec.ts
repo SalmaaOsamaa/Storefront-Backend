@@ -1,85 +1,81 @@
-import productType from "../../types/product.type";
-import User from "../../types/user.type";
-import {app}from "../../server";
 import supertest from "supertest";
+import client from "../../database";
+import UserModel from "../../models/user.model";
+import {app} from "../../server";
+import User from "../../types/user.type";
 
-const request = supertest(app);
-
-describe("Products Endpoints", () => {
-  // to use them globally
-  let token = "";
-
-  const productExample: productType = {
-    name: "orange",
-    price: "4",
-    category: "fruits",
-  };
-    // @ts-ignore
-
-  const userExample: User = {
-    first_name: "salma",
-    last_name: "osama",
-    password: "test123",
-  };
-
-  // creating user to get JWT for Authorization
+const req = supertest(app);
+const userModel = new UserModel();
+const token ="";
+describe("Product Route API", () => {
   beforeAll(async () => {
-    const newUser = await request.post("/users").send(userExample);
+    const user = {
+        id:1,
+        email: 'test2@test.com',
+        user_name: 'test2User',
+        first_name: 'Test',
+        last_name: 'User',
+        password: 'test123'
+    } as User;
 
-    token = newUser.body;
+    await userModel.create(user);
   });
+
   afterAll(async () => {
-    await request.delete("/users/2");
+    const connection = await client.connect();
+    const sql =
+      "DELETE FROM users;\nALTER SEQUENCE users_id_seq RESTART WITH 1;\nDELETE FROM products;\nALTER SEQUENCE products_id_seq RESTART WITH 1";
+    const result = await connection.query(sql);
+    connection.release();
   });
 
-  it("Should Create a product ", async () => {
-    const newProduct = await request
-      .post("/products")
-      .send(productExample)
-      .set("Authorization", `Bearer ${token}`);
-
-    console.log(newProduct.body);
-    expect(newProduct.status).toBe(200);
-    expect(newProduct.body).toEqual({
-      id: 1,
-      ...productExample,
+  describe("Test CRUD Operation for Product APIS ", () => {
+    it("it should create new product", async () => {
+      const res = await req
+        .post("/api/products")
+        .set("content-type", "application/json")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "testProduct",
+          price: 31.9,
+          category: "test",
+        });
+      expect(res.statusCode).toBe(200);
     });
-  });
-
-  it("Should Get all products ", async () => {
-    const products = await request.get("/products");
-
-    expect(products.status).toBe(200);
-    expect(products.body.length).toBeGreaterThan(0);
-  });
-
-  it("Should Get product by id ", async () => {
-    const order = await request.get("/products/1");
-    expect(order.status).toBe(200);
-    expect(order.body).toEqual({
-      id: 1,
-      ...productExample,
+    it("it should get all product", async () => {
+      const res = await req
+        .get("/api/products")
+        .set("content-type", "application/json")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res.statusCode).toBe(200);
     });
-  });
+    it("it should getByid product", async () => {
+      const res = await req
+        .get("/api/products/3")
+        .set("content-type", "application/json")
+        .set("Authorization", `Bearer ${token}`);
 
-  it("Should Get all products with category (fruits)", async () => {
-    const products = await request.get("/products/category/fruits");
-    expect(products.status).toBe(200);
-    expect(products.body).toEqual([
-      {
-        id: 1,
-        ...productExample,
-      },
-    ]);
-  });
+      expect(res.statusCode).toBe(200);
+    });
+    it("it should update product", async () => {
+      const res = await req
+        .patch("/api/products/3")
+        .set("content-type", "application/json")
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+          name: "new Prsoduct",
+          price: 11,
+          category: "electronics",
+        });
+      expect(res.statusCode).toBe(200);
+    });
 
-  it("Should delete product with id", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const deletedOrder = await request.delete("/products/1");
-
-    const products = await request.get("/products");
-
-    expect(products.status).toBe(200);
-    expect(products.body).toEqual([]);
+    it("it should delete product", async () => {
+      const res = await req
+        .delete("/api/products/1")
+        .set("content-type", "application/json")
+        .set("Authorization", `Bearer ${token}`);
+      expect(res.statusCode).toBe(200);
+    });
   });
 });

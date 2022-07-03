@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "description": "",
   "main": "build/server.js",
-  
   "scripts": {
     "dev": "nodemon src/server.ts",
     "build": "tsc",
     "start": "npm run build && node build/server.js",
     "format": "prettier --write src/**/*.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "set NODE_ENV=test&& tsc && db-migrate up --env test  && tsc  && jasmine && db-migrate reset",
+    "test": "set NODE_ENV=test&& tsc && db-migrate up --env test  && tsc  && jasmine-ts && db-migrate reset",
     "migration:run": "db-migrate up",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix"
