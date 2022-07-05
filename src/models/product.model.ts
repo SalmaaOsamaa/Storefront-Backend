@@ -1,6 +1,7 @@
 import client from "../database";
 import productType from "../types/product.type";
 
+
 export class ProductStore {
   async index(): Promise<productType[]> {
     try {

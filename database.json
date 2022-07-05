@@ -1,19 +1,18 @@
 { 
-  "defaultENV": {"ENV": "NODE_ENV"},
     "dev": {
       "driver": "pg",
-      "host": {"ENV": "POSTGRES_HOST"},
-      "port": {"ENV":"POSTGRES_PORT"},
-      "database":{"ENV":"POSTGRES_DB"},
-      "user": {"ENV":"POSTGRES_USER"},
-      "password": {"ENV":"POSTGRES_PASSWORD"}
+      "host": "127.0.0.1",
+      "port": "5432",
+      "database": "storefront_end",
+      "user": "postgres",
+      "password": "1111"
     },
     "test": {
       "driver": "pg",
-      "host": {"ENV":"POSTGRES_HOST"},
-      "port": {"ENV":"POSTGRES_PORT"},
-      "database": {"ENV":"POSTGRES_DB_TEST"},
-      "user": {"ENV":"POSTGRES_USER"},
-      "password":{"ENV":"POSTGRES_PASSWORD"}
+      "host": "127.0.0.1",
+      "port": "5432",
+      "database": "store_test",
+      "user": "postgres",
+      "password": "1111"
     }
   }
