@@ -11,38 +11,20 @@ const {
   POSTGRES_USER,
   POSTGRES_PASSWORD,
   POSTGRES_TEST_DB,
-  BCRYPT_PASSWORD,
-  SALT_ROUNDS,
-  TOKEN_SECRET,
+  
 } = process.env;
 
-let client; 
+const client = new Pool({
+  host: POSTGRES_HOST,
+  database: NODE_ENV === 'dev' ? POSTGRES_DB : POSTGRES_TEST_DB,
+  user: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  port: parseInt(POSTGRES_PORT as string, 10),
+});
 
-if (NODE_ENV === 'dev') {
-   client= new Pool({
-      host: POSTGRES_HOST,
-      database: POSTGRES_DB,
-      user: POSTGRES_USER,
-      password: POSTGRES_PASSWORD,
-      // @ts-ignore
-      dbport: POSTGRES_PORT,
-      salt: SALT_ROUNDS,
-      pepper: BCRYPT_PASSWORD,
-      tokenSecret: TOKEN_SECRET,
-    });
-
-}
-
-if (NODE_ENV === 'test') {
-   client = new Pool({
-      host: POSTGRES_HOST,
-      database: POSTGRES_TEST_DB,
-      user: POSTGRES_USER,
-      password: POSTGRES_PASSWORD,
-      port: POSTGRES_PORT as unknown as number
-  });
-}
-
+client.on('error', (error: Error) => {
+  console.error(error.message);
+});
 
 
 export default client as Pool;
