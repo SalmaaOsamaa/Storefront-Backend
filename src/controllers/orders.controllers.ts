@@ -42,7 +42,7 @@ export const CurrentOrders = async (req: Request, res: Response) => {
 export const show = async (req: Request, res: Response) => {
   try {
     const userId: number = parseInt(req.params.id);
-    const Orders: OrderType[] = await orderStore.show(userId);
+    const Orders: OrderType = await orderStore.show(userId);
     return res.json(Orders);
   } catch (err) {
     res.status(400);

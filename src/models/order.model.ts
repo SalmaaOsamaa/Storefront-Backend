@@ -38,13 +38,13 @@ export class Order {
       throw new Error(`Couldn't get the orders, ${err}`);
     }
   }
-  async show(id: number): Promise<OrderType[]> {
+  async show(id: number): Promise<OrderType> {
     try {
       const sql = "SELECT * FROM orders WHERE id=($1)";
       const connection = await client.connect();
       const result = await connection.query(sql, [id]);
       connection.release();
-      return result.rows;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Couldn't find orders for user: ${id}, ${err}`);
     }
