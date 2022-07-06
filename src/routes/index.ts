@@ -6,7 +6,7 @@ import { orderProductRoutes } from "./api/order_product.routes";
 const routes = Router();
 routes.use("/users", userRoutes);
 routes.use("/products", productRouter);
-routes.use("/users", orderRoutes);
+routes.use("/orders", orderRoutes);
 routes.use("/orderproduct",orderProductRoutes)
 
 

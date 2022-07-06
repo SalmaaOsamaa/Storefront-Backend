@@ -33,7 +33,7 @@ export const create = async (req: Request, res: Response) => {
       price: req.body.price,
       category: req.body.category,
     };
-    const newProduct: productType = await store.create(product);
+    const newProduct: productType = await store.create(req.body);
     res.json(newProduct);
   } catch (err) {
     res.status(400);

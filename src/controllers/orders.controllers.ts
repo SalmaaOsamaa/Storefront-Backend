@@ -10,6 +10,7 @@ export const create = async (req: Request, res: Response) => {
   try {
     const order: OrderType = {
       user_id: req.body.user_id,
+      product_id: req.body.product_id,
       status: req.body.status,
     };
     const newOrder: OrderType = await orderStore.create(order);

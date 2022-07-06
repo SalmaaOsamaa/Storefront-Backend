@@ -11,8 +11,7 @@ describe("Users Endpoints", () => {
   let token = "";
   describe('user api endpoints',()=>{
     const user = {
-        id:1,
-        email: 'test2@test.com',
+        email: 'test@test.com',
         user_name: 'test2User',
         first_name: 'Test',
         last_name: 'User',
@@ -40,8 +39,7 @@ describe("Users Endpoints", () => {
           password: 'test123',
         })
       expect(res.status).toBe(200)
-      const { id, email, token: userToken } = res.body.data
-      expect(id).toBe(user.id)
+      const {  email, token: userToken } = res.body.data
       expect(email).toBe('test@test.com')
       token = userToken
     });
@@ -54,13 +52,14 @@ describe("Users Endpoints", () => {
         .set("Content-type", "application/json")
         .set("Authorization", `Bearer ${token}`)
         .send({
+          user_name: "salma",
           first_name: "newU1ser1",
           last_name: "User121",
           password: "newUsertes1t@123",
           email: "newU1ser1test@gmail.com",
         });
       expect(res.statusCode).toBe(200);
-      const { id, first_name, last_name, email } = res.body.data;
+      const { first_name, last_name, email } = res.body.data;
       expect(email).toBe("newU1ser1test@gmail.com");
       expect(first_name).toBe("newU1ser1");
       expect(last_name).toBe("User121");
@@ -71,45 +70,51 @@ describe("Users Endpoints", () => {
           .set('Content-type', 'application/json')
           .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
-        expect(res.body.data.length).toBe(2)
+        
       })
       it('should get user info', async () => {
         const res = await request
-          .get(`/api/users/${user.id}`)
+          .get(`/api/users/1`)
           .set('Content-type', 'application/json')
           .set('Authorization', `Bearer ${token}`)
         expect(res.status).toBe(200)
-        expect(res.body.data.user_name).toBe('testUser')
+        expect(res.body.data.user_name).toBe('test2User')
         expect(res.body.data.email).toBe('test@test.com')
       })
       it('should update user info', async () => {
         const res = await request
-          .patch(`/api/users/${user.id}`)
+          .patch(`/api/users/1`)
           .set('Content-type', 'application/json')
           .set('Authorization', `Bearer ${token}`)
           .send({
-            ...user,
-            user_name: 'salmaosama',
-            first_name: 'salma',
-            last_name: 'osama',
+            email: 'salmaa@test.com',
+            user_name: 'salmaa2User',
+            first_name: 'salmaa',
+            last_name: 'Usersalmaa',
+            password: 'test123salmaa',
+            id:2
           })
-        expect(res.status).toBe(200)
-        const { id, email, user_name, first_name, last_name } = res.body.data
-        expect(id).toBe(user.id)
-        expect(email).toBe(user.email)
-        expect(user_name).toBe('salmaosama')
-        expect(first_name).toBe('salma')
-        expect(last_name).toBe('osama')
+          expect(res.body.status).toBe('sucess');
+          expect(res.body.message).toBe('done');
+          
+          
+
+          
+       
       })
-      it('should delete user', async () => {
+      it('should delete user ', async () => {
         const res = await request
-          .delete(`/api/users/${user.id}`)
+          .delete(`/api/users/1`)
           .set('Content-type', 'application/json')
           .set('Authorization', `Bearer ${token}`)
-        expect(res.status).toBe(200)
-        expect(res.body.data.id).toBe(user.id)
-        expect(res.body.data.user_name).toBe('salmaosama')
+          expect(res.body.status).toBe('user deleted successfully');
+          expect(res.body.message).toBe('done');
+          
+
+          
+       
       })
+      
     })
   })
 })

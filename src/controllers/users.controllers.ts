@@ -81,7 +81,7 @@ export const deleteOne = async (
   try {
     const user = await userModel.deleteOne(req.params.id as unknown as string);
     res.json({
-      status: "sucess",
+      status: "user deleted successfully",
       message: "done",
       data: user,
     });

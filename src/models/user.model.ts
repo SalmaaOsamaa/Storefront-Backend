@@ -39,7 +39,7 @@ class UserModel {
     try {
       const connection = await client.connect();
       const sql =
-        "SELECT id, email, user_name, first_name, last_name from users";
+        "SELECT * FROM users";
       const result = await connection.query(sql);
       connection.release();
       return result.rows;
@@ -68,10 +68,12 @@ class UserModel {
   // update user
   async updateOne(u: User): Promise<User> {
     try {
+      console.log(u, "userr");
+      
       const connection = await client.connect();
       const sql = `UPDATE users 
-                  SET email=$1, user_name=$2, first_name=$3, last_name=$4, password=$5 
-                  WHERE id=$6 
+                  SET email=($1), user_name=($2), first_name=($3), last_name=($4), password=($5) 
+                  WHERE id=($6) 
                   RETURNING id, email, user_name, first_name, last_name`;
 
       const result = await connection.query(sql, [

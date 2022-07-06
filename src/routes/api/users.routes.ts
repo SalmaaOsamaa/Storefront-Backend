@@ -13,6 +13,6 @@ userRoutes
   userRoutes
   .route("/:id")
   .get(authenticationMiddlware, controllers.getOne)
-  .post(controllers.updateOne)
+  .patch(controllers.updateOne)
   .delete(controllers.deleteOne);
 export default userRoutes;

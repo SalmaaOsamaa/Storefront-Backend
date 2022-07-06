@@ -4,7 +4,7 @@ const errorMiddleware = (err: Error,
      req: Request,
       res:Response,
      next:NextFunction)=>{
-        const status = err.status || 500;
+        const status = err.status || 501;
         const message = err.message || 'something wrong'
         res.status(status).json({status, message});
         next();

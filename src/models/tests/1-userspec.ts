@@ -53,8 +53,6 @@ afterAll(async function () {
         expect(createdUser.last_name).toEqual('osamaa');
         expect(createdUser.password).toBeTruthy;
       });
-    });
-    describe('get user by id',()=>{
       it('get one user by id', async()=>{
         const result = await UserStore.getOne('1');
         expect(result.id).toEqual(1);
@@ -62,26 +60,53 @@ afterAll(async function () {
         expect(result.first_name).toEqual('salmaa');
         expect(result.last_name).toEqual('osamaa');
         expect(result.password).toBeTruthy;
-      })
-    });
-    describe('get many method', ()=>{
+      });
       it('get many should return all users', async()=>{
-      const users = await UserStore.getMany();
-      expect(users.length).toBe(1);
+        const users = await UserStore.getMany();
+        expect(users.length).toBe(1);
+        });
+        it('return authenticated user', async()=>{
+          const users = await UserStore.authenticate("testingg@testing.com", "test123");
+          expect(users?.id).toEqual(1);
+          expect(users?.email).toEqual('testingg@testing.com');
+          expect(users?.user_name).toEqual('salmaosamaa');
+          expect(users?.first_name).toEqual('salmaa');
+          expect(users?.last_name).toEqual('osamaa');
+          expect(users?.password).toBeTruthy;
+          })
+      it('return updated user', async()=>{
+       
+        const users = await UserStore.updateOne({
+  
+          email: 'test@test.com',
+          user_name: 'test2User',
+          first_name: 'Test',
+          last_name: 'User',
+          password: 'test123',
+          id:1
       })
+        expect(users.first_name).toEqual("Test");
+       
+        
+       
+        });
+        it('return deleted user', async()=>{
+       
+          const users = await UserStore.deleteOne("1")
+          
+          
+           expect(users.id).toEqual(1);
+         
+          
+         
+          })
     });
-    describe('auth method for users', ()=>{
-      it('return authenticated user', async()=>{
-      const users = await UserStore.authenticate("testingg@testing.com", "test123");
-      expect(users?.id).toEqual(1);
-      expect(users?.email).toEqual('testingg@testing.com');
-      expect(users?.user_name).toEqual('salmaosamaa');
-      expect(users?.first_name).toEqual('salmaa');
-      expect(users?.last_name).toEqual('osamaa');
-      expect(users?.password).toBeTruthy;
-      })
-    });
+ 
+
+ 
    
+
+  
 
 
   });

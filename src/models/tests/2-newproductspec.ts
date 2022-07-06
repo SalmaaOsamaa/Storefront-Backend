@@ -68,7 +68,12 @@ afterAll(async function () {
       const products = await productModel.getProductbyCat("testingproduct");
       expect(products.length).toEqual(1);
       
-      })
+      });
+      it('delte product by id', async()=>{
+        const products = await productModel.deleteProduct(1);
+        expect(products.id).toEqual(1);
+        
+        })
     });
    
 
